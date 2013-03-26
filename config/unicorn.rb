@@ -9,22 +9,19 @@ stderr_path "#{root}/log/unicorn.log"
 stdout_path "#{root}/log/unicorn.log"
 
 listen "/tmp/unicorn.#{app}.sock"
+GC.copy_on_write_friendly = true if GC.respond_to?(:copy_on_write_friendly=)
 
 before_fork do |server, worker|
-  Signal.trap 'TERM' do
-    puts 'Unicorn master intercepting TERM and sending myself QUIT instead'
-    Process.kill 'QUIT', Process.pid
+  ActiveRecord::Base.connection.disconnect!
+  old_pid = "#{root}/tmp/pids/unicorn.pid.oldbin"
+  if File.exists?(old_pid) && server.pid != old_pid
+    begin
+      Process.kill("QUIT", File.read(old_pid).to_i)
+    rescue Errno::ENOENT, Errno::ESRCH
+    end
   end
-
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.connection.disconnect!
 end
 
 after_fork do |server, worker|
-  Signal.trap 'TERM' do
-    puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to sent QUIT'
-  end
-
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.establish_connection
+  ActiveRecord::Base.establish_connection
 end
