@@ -17,7 +17,7 @@
   <div class="right four columns omega" data-hook="admin_product_form_right">
     <%= f.field_container :price do %>
       <%= f.label :price, raw(t(:master_price) + content_tag(:span, ' *', :class => "required")) %>
-      <%= f.text_field :price, :value => number_to_currency(@product.price, :unit => '') %>
+      <%= f.text_field :price, :value => number_to_currency(@product.original_price, :unit => '') %>
       <%= f.error_message_on :price %>
     <% end %>
 
@@ -31,6 +31,27 @@
     <div class="field" data-hook="featured">
       <%= f.label :featured, t(:featured) %>
       <%= f.check_box :featured, :class => 'fullwidth' %>
+    </div>
+
+    <div class="field" data-hook="featured">
+      <%= f.label :enable_discount, t(:enable_discount) %>
+      <%= f.check_box :enable_discount, :class => 'fullwidth' %>
+    </div>
+
+    <div class="right four columns omega" data-hook="discount_amount">
+      <%= f.field_container :discount_amount do %>
+        <%= f.label :discount_amount, raw(t(:discount_amount) + content_tag(:span, ' *', :class => "required")) %>
+      <%= f.text_field :discount_amount, :value => number_to_currency(@product.discount_amount, :unit => '') %>
+      <%= f.error_message_on :discount_amount %>
+    <% end %>
+    </div>
+
+    <div class="right four columns omega" data-hook="discount_amount">
+      <%= f.field_container :discount_type do %>
+        <%= f.label :discount_type, raw(t(:discount_type) + content_tag(:span, ' *', :class => "required")) %>
+        <%= f.select :discount_type, Spree::Price::DISCOUNT_SELECTION %>
+        <%= f.error_message_on :discount_type %>
+    <% end %>
     </div>
 
     <% unless @product.has_variants? %>
