@@ -95,6 +95,7 @@ vi:
   no_items_in_cart: "Giỏ hàng trống"
   no_mail_methods_defined: Chưa có phương thức mail nào
   no_products_found: "Không tìm thấy sản phẩm nào"
+  no_products_found_collections:  "Bộ sưu tập này chưa có sản phẩm nào"
   no_promotion_actions_added: Chưa có cách tính khuyến mãi nào được áp dụng
   no_promotion_rules_added: Chưa có điều kiện khuyến mãi nào được áp dụng
   no_promotions_found: Chưa có khuyến mãi nào
