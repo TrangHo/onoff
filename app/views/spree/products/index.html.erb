@@ -30,4 +30,10 @@
       <% end %>
     </ul>
   </div>
+
+  <div class='clear'></div>
+
+  <% if paginated_products.respond_to?(:num_pages) %>
+    <%= paginate paginated_products %>
+  <% end %>
 </div>

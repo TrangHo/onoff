@@ -298,10 +298,11 @@
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
-	padding: 1px;
+	padding: 1px 5px;
 	text-align: center;
 	height: 16px;
-	width: 30px;
+	min-width: 30px;
+	width: auto;
 	font-size: 12px;
 }
 
@@ -342,4 +343,12 @@
 	font-size: 18px;
 	font-family: 'Open Sans';
 	margin-top: 20px;
+}
+
+nav.pagination {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 15px;
+    color: #3c3c3c;
+    font-family: Open Sans;
 }
