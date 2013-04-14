@@ -8,7 +8,7 @@ Spree::Variant.class_eval do
   before_save :assign_sku
   after_create :auto_assign_master_price
 
-  delegate_belongs_to :default_price, :original_price, :discount_type, :discount_amount, :enable_discount if Spree::Price.table_exists?
+  delegate_belongs_to :default_price, :original_price, :display_original_price, :discount_type, :discount_amount, :display_discount_amount, :enable_discount if Spree::Price.table_exists?
 
   def option_value_name(opt_name)
     self.option_values.detect { |o| o.option_type.name == opt_name }.try(:name)

@@ -10,7 +10,7 @@ Spree::Product.class_eval do
 
   after_create :make_available, :add_product_property_unit
 
-  delegate_belongs_to :master, :original_price, :discount_type, :discount_amount, :enable_discount
+  delegate_belongs_to :master, :original_price, :display_original_price, :discount_type, :discount_amount, :display_discount_amount, :enable_discount
 
   DEFAULT_OPTION_TYPES = [COLOR = 'color', SIZE = 'size']
   PRICE_RANGES = [
@@ -25,6 +25,8 @@ Spree::Product.class_eval do
   }
   after_create :assign_color_and_size
   after_save :assign_cover_image
+
+  scope :featured, where(:featured => true)
 
   def colors
     self.variants.map { |v| v.option_value_name('color') }.uniq.flatten

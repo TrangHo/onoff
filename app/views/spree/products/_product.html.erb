@@ -1,0 +1,33 @@
+<li class='product'>
+  <%= image_tag product_image_path(product, 'small') %>
+  <div class='product-detail'>
+    <h2 class='product-title'><%= product.name %></h2>
+    <h3 class='product-sku'>MSP <%= product.sku %></h3>
+    <div class='colors-sizes'>
+      <% unless product.colors.blank? %>
+        <p> <%= t(:color) %></p>
+        <ul>
+          <% Spree::OptionValue.color_option_value_for(product.colors).each do |option_value| %>
+            <li style="background-color: #<%= option_value.color_hex_code %>"></li>
+          <% end %>
+        </ul>
+      <% end %>
+      <br/>
+      <% unless product.sizes.blank? %>
+        <p> <%= t(:size) %> </p>
+        <ul class='size'>
+          <% Spree::OptionValue.size_option_value_for(product.sizes).each do |option_value| %>
+            <li><%= option_value.name %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+    <div class='price'>
+      <% if product.enable_discount %>
+        <p class='discount'><%= product.display_original_price.gsub(' ₫', 'VNĐ') %></p>
+      <% end %>
+      <p class='price'><%= product.display_price.gsub(' ₫', 'VNĐ') %></p>
+    </div>
+  </div>
+  <%= link_to '', product_path(product) %>
+</li>

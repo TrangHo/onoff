@@ -1,14 +1,16 @@
 <div id='add-to-cart'>
   <div id='price-tag'>
     <p><%= t(:price) %></p>
-    <p class='price'>585.000 VNĐ</p>
-    <p class='discount'>(tiết kiệm 20%)</p>
+    <p class='price'><%= @product.display_price.gsub(' ₫', 'VNĐ') %></p>
+    <% if @product.enable_discount %>
+      <p class='discount'>(tiết kiệm <%= @product.display_discount_amount.gsub('₫', 'VNĐ') %>)</p>
+    <% end %>
   </div>
   <%= form_for :order, :url => populate_orders_path do |f| %>
     <%= hidden_field_tag "products[#{@product.id}]", @product.master.id %>
     <div id='quantity'>
       <%= label_tag t(:quantity) %>
-      <%= number_field_tag :quantity, 1, :min => 1 %>
+      <%= number_field_tag (@product.has_variants? ? :quantity : "variants[#{@product.master.id}]"), 1, :min => 1 %>
     </div>
     <div id='click-to-buy'>
       <%= submit_tag t(:choose_to_buy) %>
@@ -37,3 +39,61 @@
     <li><%= link_to '', 'mailto:abc@email.com', :class => 'social-media-icon mail' %></li>
   </ul>
 </div>
+
+<% form_for :order, :url => populate_orders_path do |f| %>
+  <div id="inside-product-cart-form" data-hook="inside_product_cart_form" itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+
+    <% if @product.has_variants? %>
+      <div id="product-variants" class="columns five alpha">
+        <h6 class="product-section-title"><%= t(:variants) %></h6>
+        <ul>
+          <% has_checked = false
+          @product.variants.active(current_currency).each_with_index do |v,index|
+            next if v.option_values.empty? || (!v.in_stock && !Spree::Config[:show_zero_stock_products])
+            checked = !has_checked && (v.in_stock || Spree::Config[:allow_backorders])
+            has_checked = true if checked %>
+            <li>
+              <%= radio_button_tag "products[#{@product.id}]", v.id, checked, :disabled => !v.in_stock && !Spree::Config[:allow_backorders], 'data-price' => v.price_in(current_currency).display_price %>
+              <label for="<%= ['products', @product.id, v.id].join('_') %>">
+                <span class="variant-description">
+                  <%= variant_options v %>
+                </span>
+                <% if variant_price v %>
+                  <span class="price diff"><%= variant_price v %></span>
+                <% end %>
+              </label>
+            </li>
+          <% end%>
+        </ul>
+      </div>
+    <% end%>
+
+    <% if @product.price_in(current_currency) and !@product.price.nil? %>
+      <div data-hook="product_price" class="columns five <% if !@product.has_variants? %> alpha <% else %> omega <% end %>">
+
+        <div id="product-price">
+          <h6 class="product-section-title"><%= t(:price) %></h6>
+          <div><span class="price selling" itemprop="price"><%= @product.price_in(current_currency).display_price %></span></div>
+        </div>
+
+        <div class="add-to-cart">
+          <% if @product.on_sale? %>
+            <%= number_field_tag (@product.has_variants? ? :quantity : "variants[#{@product.master.id}]"),
+              1, :class => 'title', :in => 1..@product.on_hand, :min => 1 %>
+            <%= button_tag :class => 'large primary', :id => 'add-to-cart-button', :type => :submit do %>
+              <%= t(:add_to_cart) %>
+            <% end %>
+          <% else %>
+            <%= content_tag('strong', t(:out_of_stock)) %>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+        <div id="product-price">
+          <br>
+          <div><span class="price selling" itemprop="price"><%= t('product_not_available_in_this_currency') %></span></div>
+        </div>
+    <% end %>
+
+  </div>
+<% end %>

@@ -4,6 +4,7 @@ Spree::ProductsController.class_eval do
   def index
     @header_color = 'white'
     @has_top_banner = true
+    @feature_products = Spree::Product.featured.sample(2)
 
     @searcher = Spree::Config.searcher_class.new(params)
     @searcher.current_user = try_spree_current_user

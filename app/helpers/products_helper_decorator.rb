@@ -10,4 +10,8 @@ Spree::ProductsHelper.class_eval do
   	end
     breadcrumb = raw "#{ link_to t('breadcrumb.homepage'), root_path } > #{ path } > #{name}"
   end
+
+  def product_image_path(product, version)
+    product.cover_image ? product.cover_image.attachment.url(version.to_sym) : "noimage/#{version}.png"
+  end
 end

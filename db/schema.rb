@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130326180120) do
+ActiveRecord::Schema.define(:version => 20130328151156) do
 
   create_table "slides", :force => true do |t|
     t.integer  "slide_order"
@@ -289,9 +289,12 @@ ActiveRecord::Schema.define(:version => 20130326180120) do
   add_index "spree_preferences", ["key"], :name => "index_spree_preferences_on_key", :unique => true
 
   create_table "spree_prices", :force => true do |t|
-    t.integer "variant_id",                                :null => false
-    t.decimal "amount",     :precision => 10, :scale => 2
+    t.integer "variant_id",                                                        :null => false
+    t.decimal "amount",          :precision => 10, :scale => 2
     t.string  "currency"
+    t.integer "discount_type",                                  :default => 0
+    t.integer "discount_amount",                                :default => 0
+    t.boolean "enable_discount",                                :default => false
   end
 
   create_table "spree_product_option_types", :force => true do |t|

@@ -93,7 +93,6 @@
 
 #cart-form #add-to-cart {
 	width: 180px;
-	height: 510px;
 	background: #dadada;
 	padding-top: 12px;
 	padding-bottom: 20px;
@@ -101,7 +100,7 @@
 
 #cart-form #add-to-cart #price-tag {
 	width: 155px;
-	height: 90px;
+	padding-bottom: 15px;
 	margin: auto;
 	background: #fff;
 }

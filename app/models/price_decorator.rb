@@ -24,6 +24,18 @@ Spree::Price.class_eval do
     end
   end
 
+  def display_discount_amount
+    if discount_type == DISCOUNT_TYPES[PERCENTAGE]
+      "#{discount_amount}%"
+    else
+      Spree::Money.new(discount_amount, { :currency => currency }).to_s
+    end
+  end
+
+  def display_original_price
+    Spree::Money.new(original_price, { :currency => currency }).to_s
+  end
+
   private
   def discount_amount_validation
     if enable_discount && amount.present? && DISCOUNT_TYPES.values.include?(discount_type)
