@@ -7,6 +7,14 @@
 <div id="wrapper" class="row" data-hook>
   <%= render 'spree/shared/search' %>
 
+  <div class='clear'></div>
+  <%
+    paginated_products ||= @products
+  %>
+  <% if @products.blank? %>
+    <div class='no-product-found'><%= t(:no_products_found) %></div>
+  <% end %>
+
   <div id='feature-products'>
     <ul>
       <% @feature_products.each do |product| %>

@@ -336,3 +336,10 @@
 	color: #000;
 	text-transform: capitalize;
 }
+
+.no-product-found {
+	text-align: center;
+	font-size: 18px;
+	font-family: 'Open Sans';
+	margin-top: 20px;
+}
