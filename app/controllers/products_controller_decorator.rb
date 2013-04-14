@@ -17,7 +17,15 @@ Spree::ProductsController.class_eval do
     return unless @product
 
     @variants = @product.variants_including_master.active(current_currency).includes([:option_values, :images])
-    @product_properties = @product.product_properties.includes(:property)
+
+    collection_taxonomy = Spree::Taxonomy.find_by_name('collections')
+    @similar_products_collection = []
+    @product.taxons.each do |taxon|
+      if taxon.taxonomy == collection_taxonomy
+        @similar_products_collection += taxon.products
+      end
+    end
+    @similar_products_collection = (@similar_products_collection.uniq - [@product]).sample(4)
 
     # referer = request.env['HTTP_REFERER']
     # if referer

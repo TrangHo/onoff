@@ -249,6 +249,11 @@
 	background: url('../social-media.png') 0 -96px;
 }
 
+#same-collection img, #suggest-products img {
+	width: 220px;
+	height: 220px;
+}
+
 .suggest-products-list {
 	margin-top: 35px;
 }
@@ -273,10 +278,11 @@
 
 .suggest-products-list .imagehover {
 	position: absolute;
-	width: 221px;
+	width: 220px;
 	height: 220px;
 	top: 0;
 	left: 0;
+	display: block;
 }
 
 .suggest-products-list .imagehover:hover {

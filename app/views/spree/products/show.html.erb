@@ -56,14 +56,18 @@
 
 <div id='same-collection' class='suggest-products-list'>
   <h1><%= t('product_page.collection') %></h1>
-  <ul>
-    <% ['products/suggest-product-1.jpg', 'products/suggest-product-2.jpg', 'products/suggest-product-3.jpg', 'products/suggest-product-4.jpg'].each do |img| %>
-      <li>
-        <%= image_tag img %>
-        <div class='imagehover'></div>
-      </li>
-    <% end %>
-  </ul>
+  <% if @similar_products_collection.blank? %>
+    <div class='no-product-found'><%= t(:no_products_similar_collections) %></div>
+  <% else %>
+    <ul>
+      <% @similar_products_collection.each do |product| %>
+        <li>
+          <%= image_tag(product_image_path(product, 'small')) %>
+          <%= link_to '', product_path(product), :class => 'imagehover' %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
 </div>
 
 <hr/>
