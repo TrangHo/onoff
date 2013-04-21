@@ -191,6 +191,7 @@
 	display: inline-block;
 	width: 34px;
 	height: 10px;
+	border: 1px solid #ccc;
 }
 
 .feature-product .product-detail .colors-sizes ul.size li {
@@ -291,6 +292,7 @@
 	display: inline-block;
 	width: 20px;
 	height: 7px;
+	border: 1px solid #ccc;
 }
 
 #product-list .product .product-detail .colors-sizes ul.size li {
