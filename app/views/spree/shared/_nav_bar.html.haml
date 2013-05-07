@@ -10,3 +10,5 @@
 		= link_to t('nav.online_shop'), products_path, :class => "nav-buttons #{ 'active' if controller.controller_name == 'products' }"
 	%li
 		= link_to t('nav.promotion'), '#', :class => 'nav-buttons'
+	%li
+		= link_to t('nav.cart'), cart_path, :class => "nav-buttons nav-cart #{ 'active' if controller.controller_name == 'orders' }"

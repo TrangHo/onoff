@@ -1,4 +1,4 @@
-body#default {
+body#default, body#cart {
 	height: 100%;
 	width: 100%;
 	min-width: 1000px;
@@ -6,7 +6,7 @@ body#default {
 	font-family: 'KnockMiddle';
 }
 
-body#default p {
+body#default p, body#cart p {
 	font-family: 'Open Sans';
 }
 
@@ -60,6 +60,7 @@ nav ul#main-nav-bar {
 	border-bottom: none;
 	margin-bottom: 0;
 	margin-top: 2px;
+	position: relative;
 }
 
 #header nav #main-nav-bar li a.active {
@@ -69,10 +70,10 @@ nav ul#main-nav-bar {
 	border: 2px solid;
 }
 
-#header nav #main-nav-bar li a.nav-buttons{
+#header nav #main-nav-bar li a.nav-buttons {
 	vertical-align: middle;
 	display: inline-block;
-	margin: 0px 35px;
+	margin: 0px 14px;
 	text-align: center;
 	padding: 10px;
 	-webkit-touch-callout: none;
@@ -81,6 +82,17 @@ nav ul#main-nav-bar {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+
+#header nav #main-nav-bar li a.nav-buttons.nav-cart {
+	background: url('cart.png') no-repeat 5px center;
+	background-size: 17px auto;
+	padding-left: 27px;
+}
+
+#header.white nav #main-nav-bar li a.nav-buttons.nav-cart {
+	background: url('cart-black.png') no-repeat 5px center;
+	background-size: 17px auto;
 }
 
 #header nav #main-nav-bar li:first-child a.nav-buttons {
