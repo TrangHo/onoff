@@ -7,7 +7,7 @@
     <% end %>
   </div>
   <%= form_for :order, :url => populate_orders_path do |f| %>
-    <%= hidden_field_tag "products[#{@product.id}]", @product.master.id %>
+    <%= hidden_field_tag "products[#{@product.id}]", @product.master.id, :id => 'chosen_variant', :data => { :master => @product.master.id } %>
     <div id='quantity'>
       <%= label_tag t(:quantity) %>
       <%= number_field_tag (@product.has_variants? ? :quantity : "variants[#{@product.master.id}]"), 1, :min => 1 %>

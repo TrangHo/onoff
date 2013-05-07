@@ -41,6 +41,22 @@ Spree::Product.class_eval do
     image || self.master.images.first
   end
 
+  def find_variants_with_option_value(value)
+    self.variants.select { |variant| !variant.option_values.where(:name => value).blank? }
+  end
+
+  def available_colors_for_size(size)
+    self.variants.select { |v| !v.option_values.where(:name => size).blank? }.map { |v| v.option_value_name('color') }
+  end
+
+  def available_sizes_for_color(color)
+    self.variants.select { |v| !v.option_values.where(:name => color).blank? }.map { |v| v.option_value_name('size') }
+  end
+
+  def variant_id_for_color_and_size(color, size)
+    self.variants.select { |variant| !variant.option_values.where(:name => color).blank? && !variant.option_values.where(:name => size).blank? }.try(:first).try(:id)
+  end
+
   def self.all_tags
     self.joins(:tags).pluck('tags.name')
   end

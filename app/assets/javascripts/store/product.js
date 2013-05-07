@@ -12,7 +12,7 @@ add_image_handlers = function() {
     // });
     return false;
   });
-  
+
   thumbnails.find('li').on('mouseenter', function(event) {
     $($('#main-image img')[0]).attr('src', ($(event.currentTarget)).find('a').attr('href'));
     $('.jqzoom').removeData('jqzoom');
@@ -48,6 +48,86 @@ update_variant_price = function(variant) {
   }
 };
 
+function select_colors() {
+  $('.available-colors ul li').on('click', function() {
+    if ($(this).hasClass('chosen')) {
+      $(this).removeClass('chosen');
+      $('.available-sizes ul li').removeClass('not-available');
+    } else {
+      var selectedColor = this.id;
+      var availableSizes = $(this).data('sizes');
+
+      if (!$(this).hasClass('not-available')) {
+        $('.available-colors ul li').removeClass('chosen');
+        $(this).toggleClass('chosen');
+
+        $('.available-sizes ul li').removeClass('not-available');
+
+        for (var i = 0; i < $('.available-sizes ul li').length; i++) {
+          var size = $('.available-sizes ul li')[i].id;
+          size = size.slice(5, size.length);
+          if (availableSizes.indexOf(size) < 0) {
+            $($('.available-sizes ul li')[i]).addClass('not-available');
+          }
+        }
+      }
+    }
+
+    selectVariant();
+  });
+}
+
+function select_sizes() {
+  $('.available-sizes ul li').on('click', function() {
+    if ($(this).hasClass('chosen')) {
+      $(this).removeClass('chosen');
+      $('.available-colors ul li').removeClass('not-available');
+    } else {
+      var selectedSize = this.id;
+      var availableColors = $(this).data('colors');
+
+      if (!$(this).hasClass('not-available')) {
+        $('.available-sizes ul li').removeClass('chosen');
+        $(this).toggleClass('chosen');
+
+        $('.available-colors ul li').removeClass('not-available');
+
+        for (var i = 0; i < $('.available-colors ul li').length; i++) {
+          var color = $('.available-colors ul li')[i].id;
+          color = color.slice(6, color.length);
+          if (availableColors.indexOf(color) < 0) {
+            $($('.available-colors ul li')[i]).addClass('not-available');
+          }
+        }
+      }
+    }
+
+    selectVariant();
+  });
+}
+
+function selectVariant() {
+  if ($('.available-sizes ul li').hasClass('chosen') && $('.available-colors ul li').hasClass('chosen')) {
+    var size = $('.available-sizes ul li.chosen').attr('id').slice(5, $('.available-sizes ul li.chosen').attr('id').length);
+    var color = $('.available-colors ul li.chosen').attr('id').slice(6, $('.available-colors ul li.chosen').attr('id').length);
+
+    $('input#variant-' + color + '-' + size + '[name="variant_id"]').attr('checked', true);
+    $('input#chosen_variant').val($('input[name="variant_id"]:checked').val());
+  } else {
+    $('input[name="variant_id"]').attr('checked', false);
+    $('input#chosen_variant').val($('input#chosen_variant').data('master'));
+  }
+}
+
+function checkChosenVariantBeforeSubmitForm() {
+  $('form').submit(function() {
+    if (($('.variants input').length > 0) && ($('input[name="variant_id"]:checked').length == 0)) {
+      alert('Vui lòng chọn màu sắc và size cho sản phẩm trước khi thêm vào giỏ hàng');
+      return false;
+    }
+  });
+}
+
 $(function() {
   add_image_handlers();
   if (($('#product-variants input[type="radio"]')).length > 0) {
@@ -57,4 +137,8 @@ $(function() {
     // show_variant_images(this.value);
     update_variant_price($(this));
   });
+
+  select_colors();
+  select_sizes();
+  checkChosenVariantBeforeSubmitForm();
 });

@@ -6,7 +6,7 @@ Spree::Variant.class_eval do
   after_save :check_duplicate_variants
 
   before_save :assign_sku
-  after_create :auto_assign_master_price
+  after_save :auto_assign_master_price
 
   delegate_belongs_to :default_price, :original_price, :display_original_price, :discount_type, :discount_amount, :display_discount_amount, :enable_discount if Spree::Price.table_exists?
 
@@ -42,6 +42,6 @@ Spree::Variant.class_eval do
   end
 
   def auto_assign_master_price
-    update_attributes(:price => product.master.price) if product.master.present?
+    update_attributes(:price => product.master.price) if product.master.present? && self.price.to_i == 0
   end
 end

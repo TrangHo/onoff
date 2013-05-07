@@ -41,6 +41,12 @@
 
 #product-description .available-colors ul {
 	list-style: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 #product-description .available-colors ul li {
@@ -51,12 +57,37 @@
 	border: 1px solid #ccc;
 }
 
+#product-description .available-colors ul li.chosen {
+	border: 2px solid #333;
+}
+
+#product-description .available-sizes ul li.chosen {
+	border-color: #333;
+	border-width: 2px;
+}
+
+#product-description .available-colors ul li.not-available {
+	opacity: 0.5;
+	filter: alpha(opacity = 50);
+}
+
+#product-description .available-sizes ul li.not-available {
+	background: #ccc;
+	color: #fff;
+}
+
 #product-description .available-sizes {
 	width: 190px;
 }
 
 #product-description .available-sizes ul {
 	list-style: none;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
 }
 
 #product-description .available-sizes ul li {
@@ -421,4 +452,8 @@
 
 #product-images #main-image a .zoomPad .zoomWindow .zoomWrapper .zoomWrapperImage img {
 	max-width: none;
+}
+
+.variants {
+	display: none;
 }

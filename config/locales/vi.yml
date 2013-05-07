@@ -37,6 +37,7 @@ vi:
   add_option_value: "Thêm lựa chọn"
   add_promotion_action_of_type: Thêm cách tính thuộc loại
   add_promotion_rule_of_type: "Thêm điều kiện thuộc loại"
+  apply: "Áp dụng"
   back_to_adjustments_list: "Quay Lại Danh Sách Điều Chỉnh"
   back_to_mail_methods_list: "Quay Lại Danh Sách Phương Thức Mail"
   back_to_orders_list: "Quay Lại Liệt Kê Đơn Hàng"
@@ -139,6 +140,7 @@ vi:
   presentation: Hiển thị
   price: Giá
   product_color: Màu
+  product_has_no_description: Sản phẩm chưa được cập nhật mô tả
   product_rule:
     choose_products: Chọn sản phẩm
     label: "Đơn hàng phải chứa %{select} những sản phẩm này"

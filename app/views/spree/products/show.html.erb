@@ -26,23 +26,30 @@
         <h1 class="product-title" itemprop="name"><%= @product.name %></h1>
         <h2 class="product-sku" itemprop="sku">MSP <%= @product.sku %></h2>
         <div itemprop="description" data-hook="description">
-          <p><%= @product.description %></p>
+          <p><%= @product.description.blank? ? t(:product_has_no_description) : @product.description %></p>
         </div>
         <div class='available-colors'>
           <ul>
             <% Spree::OptionValue.color_option_value_for(@product.colors).each do |option_value| %>
-              <li style="background-color: #<%= option_value.color_hex_code %>"></li>
+              <li id='color-<%= option_value.name %>' style="background-color: #<%= option_value.color_hex_code %>" data-sizes='<%= @product.available_sizes_for_color(option_value.name) %>'></li>
             <% end %>
           </ul>
         </div>
         <div class='available-sizes'>
           <ul class='no-list-type'>
             <% Spree::OptionValue.size_option_value_for(@product.sizes).each do |option_value| %>
-              <li><%= option_value.name %></li>
+              <li id='size-<%= option_value.name %>' data-colors='<%= @product.available_colors_for_size(option_value.name) %>'><%= option_value.name %></li>
             <% end %>
           </ul>
         </div>
-        <div class='size-chart'><%= link_to t(:size_chart), '#', :target => 'blank' %></div>
+        <% if Spree::OptionValue.size_option_value_for(@product.sizes).size > 0 %>
+          <div class='size-chart'><%= link_to t(:size_chart), '#', :target => 'blank' %></div>
+        <% end %>
+        <div class='variants'>
+          <% @product.variants.each do |variant| %>
+            <%= radio_button_tag "variant_id", variant.id, false, :data => { :color => variant.option_value_name('color'), :size => variant.option_value_name('size') }, :id => "variant-#{variant.option_value_name('color')}-#{variant.option_value_name('size')}" %>
+          <% end %>
+        </div>
       </div>
 
       <div id="cart-form" data-hook="cart_form">
